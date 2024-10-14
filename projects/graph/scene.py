@@ -2,30 +2,32 @@
 # manim -pql graph/scene.py VGraphVectors
 from manim import *
 from networkx import complete_graph
+from numpy import linalg
+
+graph_layouts = [
+    "spring",
+    "circular",
+    "kamada_kawai",
+    "planar",
+    "random",
+    "shell",
+    "spectral",
+    "spiral",
+]
 
 
 class VGraphAllAnimations(Scene):
     def construct(self):
-        layouts = [
-            "spring",
-            "circular",
-            "kamada_kawai",
-            "planar",
-            "random",
-            "shell",
-            "spectral",
-            "spiral",
-        ]
         vertices = [1, 2, 3]
         edges = [(1, 2), (2, 3)]
-        g = Graph(vertices, edges, layout=layouts[0])
+        g = Graph(vertices, edges, layout=graph_layouts[0])
 
         self.play(Create(g))
         self.wait()
         self.origin_point = g.vertices[0].get_center()
 
-        for i in range(1, len(layouts)):
-            self.play(Transform(g, Graph(vertices, edges, layout=layouts[i])))
+        for i in range(1, len(graph_layouts)):
+            self.play(Transform(g, Graph(vertices, edges, layout=graph_layouts[i])))
             self.wait()
 
 
@@ -73,32 +75,61 @@ class MovingAngle(Scene):
         self.play(theta_tracker.animate.set_value(350))
 
 
+def matrixFromVectors(v1: Vector, v2: Vector):
+    return [
+        [1, 1, 1],
+        [v1.get_coord(0), v1.get_coord(1), v1.get_coord(2)],
+        [
+            v2.get_coord(0),
+            v2.get_coord(1),
+            v2.get_coord(2),
+        ],
+    ]
+
+
 class VGraphVectors(VectorScene):
     def construct(self):
-        plane = self.add_plane(animate=True).add_coordinates()
-
-        vector = self.add_vector([-3, -2], color=YELLOW)
-
-        basis = self.get_basis_vectors()
-        self.add(basis)
-        self.vector_to_coords(vector=vector)
-
         theta_tracker = ValueTracker(0)
 
-        rotating_vector = Vector([2, 2], color=RED).rotate_about_origin(
-            theta_tracker.get_value() * DEGREES
+        plane = NumberPlane(
+            x_range=(-5, 5, 1),
+            y_range=(-5, 5, 1),
+            x_length=4,
+            y_length=4,
         )
-        self.add(rotating_vector)
-
-        rotating_vector.add_updater(
-            lambda x: x.become(
-                Vector([2, 2], color=RED).rotate_about_origin(
-                    theta_tracker.get_value() * DEGREES
-                )
+        vector = plane.get_vector(
+            [-3, -2],
+            color=YELLOW,
+        )
+        rotating_vector = always_redraw(
+            lambda: plane.get_vector([2, 2], color=RED).rotate_about_origin(
+                theta_tracker.get_value() * DEGREES
             )
         )
 
-        self.write_vector_coordinates(vector=rotating_vector)
+        plot_group = Group(plane, vector, rotating_vector)
+
+        vertices = [1, 2, 3]
+        edges = [(1, 2), (2, 3)]
+        layout = {1: vector.get_end(), 2: [0, 0, 0], 3: rotating_vector.get_end()}
+        g = Graph(vertices, edges, layout=layout)
+
+        matr = always_redraw(
+            lambda: DecimalMatrix(matrixFromVectors(vector, rotating_vector)).to_edge(
+                RIGHT, buff=2
+            )
+        )
+        det = always_redraw(
+            lambda: get_det_text(
+                matr,
+                determinant=linalg.det(matrixFromVectors(vector, rotating_vector)),
+                initial_scale_factor=1,
+            )
+        )
+        matrix_group = Group(matr, det)
+
+        g.to_edge(LEFT, buff=2)
+        self.add(plot_group, g, matrix_group)
 
         self.play(theta_tracker.animate.set_value(40), run_time=2)
 

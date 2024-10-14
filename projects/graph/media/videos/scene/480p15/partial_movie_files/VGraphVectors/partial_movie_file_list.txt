@@ -1,10 +1,2 @@
 # This file is used internally by FFMPEG.
-file 'file:C:/Users/Pangloss/Desktop/Warmers/manim/projects/graph/media/videos/scene/480p15/partial_movie_files/VGraphVectors/1185818338_1614562192_223132457.mp4'
-file 'file:C:/Users/Pangloss/Desktop/Warmers/manim/projects/graph/media/videos/scene/480p15/partial_movie_files/VGraphVectors/624642324_2896326737_1856514711.mp4'
-file 'file:C:/Users/Pangloss/Desktop/Warmers/manim/projects/graph/media/videos/scene/480p15/partial_movie_files/VGraphVectors/624642324_2689852643_1686078275.mp4'
-file 'file:C:/Users/Pangloss/Desktop/Warmers/manim/projects/graph/media/videos/scene/480p15/partial_movie_files/VGraphVectors/624642324_980742584_1898221436.mp4'
-file 'file:C:/Users/Pangloss/Desktop/Warmers/manim/projects/graph/media/videos/scene/480p15/partial_movie_files/VGraphVectors/624642324_1704852926_2851105264.mp4'
-file 'file:C:/Users/Pangloss/Desktop/Warmers/manim/projects/graph/media/videos/scene/480p15/partial_movie_files/VGraphVectors/624642324_4254219168_2697206540.mp4'
-file 'file:C:/Users/Pangloss/Desktop/Warmers/manim/projects/graph/media/videos/scene/480p15/partial_movie_files/VGraphVectors/624642324_1704852926_3657550178.mp4'
-file 'file:C:/Users/Pangloss/Desktop/Warmers/manim/projects/graph/media/videos/scene/480p15/partial_movie_files/VGraphVectors/624642324_2608044702_1982078701.mp4'
-file 'file:C:/Users/Pangloss/Desktop/Warmers/manim/projects/graph/media/videos/scene/480p15/partial_movie_files/VGraphVectors/624642324_21997843_3673882692.mp4'
+file 'file:C:/Users/Pangloss/Desktop/Warmers/manim/projects/graph/media/videos/scene/480p15/partial_movie_files/VGraphVectors/1185818338_21997843_2267055472.mp4'
